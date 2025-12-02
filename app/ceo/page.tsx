@@ -2,8 +2,9 @@
 
 import { useMemo } from 'react';
 import { executives } from '../data/executives';
+import { immediateTasks } from '../data/tasks';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import { Building2, Target } from 'lucide-react';
+import { Building2, Target, AlertTriangle, TrendingUp, CheckCircle2, Factory, FlaskConical } from 'lucide-react';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
@@ -59,6 +60,125 @@ export default function CEODashboard() {
   }, [months, totalRevenue]);
 
   const totalProgress = (totalRevenue.current / totalRevenue.target) * 100;
+
+  // 전사 핵심 지표 데이터
+  const keyMetrics = useMemo(() => [
+    {
+      category: '연간 매출액',
+      target: 200,
+      current: 20,
+      unit: '억원',
+      achievementRate: (20 / 200) * 100,
+      status: 'behind' as const,
+    },
+    {
+      category: '영업이익률',
+      target: 10,
+      current: 3,
+      unit: '%',
+      achievementRate: (3 / 10) * 100,
+      status: 'behind' as const,
+    },
+    {
+      category: '설비 가동률',
+      target: 60,
+      current: 30,
+      unit: '%',
+      achievementRate: (30 / 60) * 100,
+      status: 'at-risk' as const,
+    },
+    {
+      category: '신제품 출시',
+      target: 18,
+      current: 9,
+      unit: '종',
+      achievementRate: (9 / 18) * 100,
+      status: 'behind' as const,
+    },
+    {
+      category: '고용 인원',
+      target: 80,
+      current: 73,
+      unit: '명',
+      achievementRate: (73 / 80) * 100,
+      status: 'on-track' as const,
+    },
+  ], []);
+
+  // 즉시 대응 필요 항목 (우선순위 높은 항목만)
+  const urgentTasks = useMemo(() => {
+    return immediateTasks
+      .filter((task) => task.priority === 'high' && task.status !== 'completed')
+      .slice(0, 5);
+  }, []);
+
+  // 부서별 KPI 달성률 히트맵 데이터
+  const departmentHeatmap = useMemo(() => {
+    const departments = ['영업본부', '생산본부', '품질본부', '연구소'];
+    const deptData: Record<string, { kpis: number[]; overall: string }> = {};
+
+    departments.forEach((dept) => {
+      const deptExecutives = executives.filter((e) => 
+        e.department?.includes(dept.replace('본부', '').replace('연구소', '연구소'))
+      );
+      
+      if (deptExecutives.length > 0) {
+        const allKPIs = deptExecutives.flatMap((e) => e.kpis);
+        const kpiProgress = [
+          allKPIs[0] ? (allKPIs[0].current / allKPIs[0].target) * 100 : 0,
+          allKPIs[1] ? (allKPIs[1].current / allKPIs[1].target) * 100 : 0,
+          allKPIs[2] ? (allKPIs[2].current / allKPIs[2].target) * 100 : 0,
+        ];
+        const avgProgress = kpiProgress.reduce((sum, p) => sum + p, 0) / kpiProgress.length;
+        
+        deptData[dept] = {
+          kpis: kpiProgress,
+          overall: avgProgress >= 70 ? 'B' : avgProgress >= 50 ? 'C' : 'D',
+        };
+      } else {
+        deptData[dept] = {
+          kpis: [0, 0, 0],
+          overall: 'C',
+        };
+      }
+    });
+
+    return deptData;
+  }, []);
+
+  const getStatusColor = (status: 'on-track' | 'at-risk' | 'behind') => {
+    switch (status) {
+      case 'on-track':
+        return 'text-green-600 dark:text-green-400';
+      case 'at-risk':
+        return 'text-yellow-600 dark:text-yellow-400';
+      case 'behind':
+        return 'text-red-600 dark:text-red-400';
+    }
+  };
+
+  const getStatusIcon = (status: 'on-track' | 'at-risk' | 'behind') => {
+    switch (status) {
+      case 'on-track':
+        return <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />;
+      case 'at-risk':
+        return <TrendingUp className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />;
+      case 'behind':
+        return <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />;
+    }
+  };
+
+  const getProgressColor = (progress: number) => {
+    if (progress >= 70) return 'text-green-600 dark:text-green-400';
+    if (progress >= 50) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
+  };
+
+  const getProgressBgColor = (progress: number) => {
+    if (progress >= 70) return 'bg-green-100 dark:bg-green-900/30';
+    if (progress >= 50) return 'bg-yellow-100 dark:bg-yellow-900/30';
+    return 'bg-red-100 dark:bg-red-900/30';
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -196,6 +316,163 @@ export default function CEODashboard() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+        </div>
+
+        {/* 전사 핵심 지표 및 즉시 대응 필요 항목 */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* 전사 핵심 지표 */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              전사 핵심 지표
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th className="text-left py-2 px-3 text-gray-700 dark:text-gray-300">구분</th>
+                    <th className="text-right py-2 px-3 text-gray-700 dark:text-gray-300">목표</th>
+                    <th className="text-right py-2 px-3 text-gray-700 dark:text-gray-300">현재</th>
+                    <th className="text-right py-2 px-3 text-gray-700 dark:text-gray-300">달성률</th>
+                    <th className="text-center py-2 px-3 text-gray-700 dark:text-gray-300">상태</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {keyMetrics.map((metric, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                    >
+                      <td className="py-3 px-3 text-gray-900 dark:text-white font-medium">
+                        {metric.category}
+                      </td>
+                      <td className="py-3 px-3 text-right text-gray-600 dark:text-gray-300">
+                        {metric.target.toLocaleString()}{metric.unit}
+                      </td>
+                      <td className="py-3 px-3 text-right text-gray-900 dark:text-white font-semibold">
+                        {metric.current.toLocaleString()}{metric.unit}
+                      </td>
+                      <td className={`py-3 px-3 text-right font-semibold ${getProgressColor(metric.achievementRate)}`}>
+                        {metric.achievementRate.toFixed(0)}%
+                      </td>
+                      <td className="py-3 px-3 text-center">
+                        {getStatusIcon(metric.status)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 즉시 대응 필요 항목 */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              즉시 대응 필요 항목
+            </h3>
+            <div className="space-y-3">
+              {urgentTasks.map((task, index) => (
+                <div
+                  key={task.id}
+                  className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
+                >
+                  <div className="flex-shrink-0 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                    {index + 1}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                      <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                        {task.title}
+                      </h4>
+                    </div>
+                    {task.description && (
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {task.description}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-3 mt-2 text-xs text-gray-500 dark:text-gray-400">
+                      <span>{task.department}</span>
+                      <span>•</span>
+                      <span>{task.owner}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 부서별 KPI 달성률 히트맵 */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700 mb-8">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            부서별 KPI 달성률 히트맵
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
+                    부서
+                  </th>
+                  <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
+                    KPI 1
+                  </th>
+                  <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
+                    KPI 2
+                  </th>
+                  <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
+                    KPI 3
+                  </th>
+                  <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
+                    종합 평가
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(departmentHeatmap).map(([dept, data]) => (
+                  <tr
+                    key={dept}
+                    className="border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                  >
+                    <td className="py-3 px-4 text-gray-900 dark:text-white font-medium">
+                      {dept}
+                    </td>
+                    {data.kpis.map((kpi, idx) => (
+                      <td
+                        key={idx}
+                        className={`py-3 px-4 text-center font-semibold ${
+                          kpi >= 70
+                            ? 'text-green-600 dark:text-green-400'
+                            : kpi >= 50
+                              ? 'text-yellow-600 dark:text-yellow-400'
+                              : kpi > 0
+                                ? 'text-red-600 dark:text-red-400'
+                                : 'text-gray-400 dark:text-gray-500'
+                        }`}
+                      >
+                        {kpi.toFixed(0)}%
+                      </td>
+                    ))}
+                    <td className="py-3 px-4 text-center">
+                      <span
+                        className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-bold ${
+                          data.overall === 'A'
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                            : data.overall === 'B'
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                              : data.overall === 'C'
+                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                        }`}
+                      >
+                        {data.overall}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* 본부별 상세 현황 */}
