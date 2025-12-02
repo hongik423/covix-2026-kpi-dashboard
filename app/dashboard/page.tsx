@@ -1,19 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { executives } from './data/executives';
-import { BarChart3, Users, TrendingUp, Building2 } from 'lucide-react';
+import { executives } from '../data/executives';
+import { BarChart3, Users, TrendingUp, Building2, ArrowRight } from 'lucide-react';
 
-export default function Home() {
+export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <main className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            코빅스 KPI 성과관리 대시보드
+            코빅스 통합 대시보드
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400">
-            임원별 KPI를 실시간으로 모니터링하고 분석합니다
+            2026년 200억 매출 달성을 위한 성과관리 시스템
           </p>
         </div>
 
@@ -71,21 +71,50 @@ export default function Home() {
           </div>
         </div>
 
-        {/* CEO 대시보드 링크 */}
-        <div className="mb-8">
+        {/* 빠른 링크 */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           <Link
             href="/ceo"
-            className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Building2 className="w-8 h-8" />
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-1">전사 대시보드 (CEO 뷰)</h2>
-              <p className="text-blue-100">전사 매출 목표 및 본부별 KPI 현황을 한눈에 확인하세요</p>
-            </div>
-            <span className="text-2xl">→</span>
+            <Building2 className="w-8 h-8 mb-3" />
+            <h3 className="text-lg font-semibold mb-1">전사 대시보드</h3>
+            <p className="text-sm text-blue-100">CEO 뷰</p>
+            <ArrowRight className="w-5 h-5 mt-2" />
+          </Link>
+
+          <Link
+            href="/performance/upload"
+            className="bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            <BarChart3 className="w-8 h-8 mb-3" />
+            <h3 className="text-lg font-semibold mb-1">KPI 등록</h3>
+            <p className="text-sm text-purple-100">성과자료 업로드</p>
+            <ArrowRight className="w-5 h-5 mt-2" />
+          </Link>
+
+          <Link
+            href="/performance/analysis"
+            className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            <TrendingUp className="w-8 h-8 mb-3" />
+            <h3 className="text-lg font-semibold mb-1">AI 분석</h3>
+            <p className="text-sm text-green-100">성과 분석</p>
+            <ArrowRight className="w-5 h-5 mt-2" />
+          </Link>
+
+          <Link
+            href="/"
+            className="bg-gradient-to-br from-gray-600 to-gray-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            <Users className="w-8 h-8 mb-3" />
+            <h3 className="text-lg font-semibold mb-1">개인 대시보드</h3>
+            <p className="text-sm text-gray-100">담당자별 KPI</p>
+            <ArrowRight className="w-5 h-5 mt-2" />
           </Link>
         </div>
 
+        {/* 본부별 대시보드 링크 */}
         <div className="grid md:grid-cols-2 gap-6">
           {executives.map((executive) => {
             const avgProgress =
@@ -162,3 +191,4 @@ export default function Home() {
     </div>
   );
 }
+
