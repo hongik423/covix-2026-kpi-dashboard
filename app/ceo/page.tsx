@@ -12,7 +12,7 @@ export default function CEODashboard() {
   // 2026년 목표: 200억원
   const totalRevenue = useMemo(() => ({ 
     target: 200000000000, // 200억원
-    current: 174000000000, // 현재 174억원 (87% 달성)
+    current: 170000000000, // 현재 170억원 (85% 달성)
     unit: '원' 
   }), []);
 
@@ -40,15 +40,15 @@ export default function CEODashboard() {
 
   const revenueData = useMemo(() => {
     // 월별 목표: 200억 / 12개월 = 월 16.67억
-    // 월별 실적: 점진적 증가 추세 (1월 14억 → 6월 18억)
+    // 월별 실적: 점진적 증가 추세 (1월 13억 → 6월 17억)
     const monthlyTarget = totalRevenue.target / 12; // 월 16.67억
     const monthlyActuals = [
-      14000000000, // 1월: 14억
-      14500000000, // 2월: 14.5억
-      15000000000, // 3월: 15억
-      15500000000, // 4월: 15.5억
-      16000000000, // 5월: 16억
-      16500000000, // 6월: 16.5억
+      13000000000, // 1월: 13억
+      13500000000, // 2월: 13.5억
+      14000000000, // 3월: 14억
+      14500000000, // 4월: 14.5억
+      15000000000, // 5월: 15억
+      16000000000, // 6월: 16억
     ];
     
     return months.map((month, index) => ({
@@ -132,7 +132,7 @@ export default function CEODashboard() {
               </div>
               <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
                 <p>• 연간 목표: 200억원</p>
-                <p>• 현재 실적: 174억원 (누적)</p>
+                <p>• 현재 실적: 170억원 (누적)</p>
                 <p>• 남은 목표: {(totalRevenue.target - totalRevenue.current) / 100000000}억원</p>
               </div>
             </div>
