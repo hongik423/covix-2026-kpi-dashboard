@@ -21,33 +21,68 @@ export default function DepartmentPage() {
   const deptId = params.dept as string;
   const [selectedMonth, setSelectedMonth] = useState(format(new Date(), 'yyyy-MM'));
   const [kpis, setKpis] = useState<KPI[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const department = departmentMap[deptId];
-  const deptExecutives = executives.filter((e) => e.department === department?.name);
+  const department = deptId ? departmentMap[deptId] : null;
+  const deptExecutives = department 
+    ? executives.filter((e) => e.department === department.name)
+    : [];
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!department) return;
+    if (typeof window === 'undefined') {
+      setIsLoading(false);
+      return;
+    }
+    
+    if (!department || !deptId) {
+      setIsLoading(false);
+      setKpis([]);
+      return;
+    }
 
+    setIsLoading(true);
+    
     try {
       const allKPIs: KPI[] = [];
       deptExecutives.forEach((exec) => {
-        exec.kpis.forEach((kpi) => {
-          const updatedKpi = updateKPIWithFeedback(kpi, selectedMonth);
-          allKPIs.push(updatedKpi);
-        });
+        if (exec.kpis && Array.isArray(exec.kpis)) {
+          exec.kpis.forEach((kpi) => {
+            try {
+              const updatedKpi = updateKPIWithFeedback(kpi, selectedMonth);
+              allKPIs.push(updatedKpi);
+            } catch (kpiError) {
+              console.error(`KPI ${kpi.id} 처리 오류:`, kpiError);
+            }
+          });
+        }
       });
       setKpis(allKPIs);
     } catch (error) {
       console.error('KPI 로드 오류:', error);
       setKpis([]);
+    } finally {
+      setIsLoading(false);
     }
-  }, [deptId, selectedMonth, department]);
+  }, [deptId, selectedMonth]);
 
-  if (!department) {
+  if (!department || !deptId) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <p className="text-gray-600 dark:text-gray-400">부서를 찾을 수 없습니다.</p>
+        <div className="text-center">
+          <p className="text-gray-600 dark:text-gray-400 mb-2">부서를 찾을 수 없습니다.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-500">URL: /department/{deptId}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">로딩 중...</p>
+        </div>
       </div>
     );
   }
@@ -159,16 +194,24 @@ export default function DepartmentPage() {
         </div>
 
         {/* KPI 카드 */}
-        <div className="space-y-4 mb-8">
-          {kpis.map((kpi) => (
-            <KPICardExpanded
-              key={kpi.id}
-              kpi={kpi}
-              month={selectedMonth}
-              onFeedbackSave={handleFeedbackSave}
-            />
-          ))}
-        </div>
+        {kpis.length > 0 ? (
+          <div className="space-y-4 mb-8">
+            {kpis.map((kpi) => (
+              <KPICardExpanded
+                key={kpi.id}
+                kpi={kpi}
+                month={selectedMonth}
+                onFeedbackSave={handleFeedbackSave}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 text-center mb-8">
+            <p className="text-gray-600 dark:text-gray-400">
+              등록된 KPI가 없습니다.
+            </p>
+          </div>
+        )}
 
         {/* 차트 */}
         {kpis.length > 0 && (

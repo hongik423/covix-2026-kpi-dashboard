@@ -37,22 +37,17 @@ export function Navigation() {
           </Link>
 
           {/* 데스크톱 네비게이션 */}
-          <div className="hidden lg:flex items-center gap-1 overflow-x-auto">
+          <div className="hidden xl:flex items-center gap-0.5 flex-wrap max-w-4xl">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || 
                 (item.href !== '/' && pathname.startsWith(item.href));
               
-              // 긴 텍스트는 줄임 처리
-              const displayLabel = item.label.length > 12 
-                ? item.label.substring(0, 10) + '...' 
-                : item.label;
-              
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors whitespace-nowrap text-sm ${
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors whitespace-nowrap text-sm font-normal ${
                     isActive
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -60,18 +55,49 @@ export function Navigation() {
                   title={item.label}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
-                  <span className="truncate max-w-[120px]">{displayLabel}</span>
+                  <span className="text-sm leading-tight">{item.label}</span>
                 </Link>
               );
             })}
-            <div className="ml-4 pl-4 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
+            <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
               <ThemeToggle />
             </div>
           </div>
 
-          {/* 태블릿 네비게이션 (md ~ lg) */}
-          <div className="hidden md:flex lg:hidden items-center gap-1 overflow-x-auto">
-            {navItems.slice(0, 5).map((item) => {
+          {/* 태블릿/작은 데스크톱 네비게이션 (lg ~ xl) */}
+          <div className="hidden lg:flex xl:hidden items-center gap-0.5 overflow-x-auto max-w-3xl">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href || 
+                (item.href !== '/' && pathname.startsWith(item.href));
+              
+              // 짧은 라벨 사용
+              const shortLabel = item.label.length > 6 ? item.label.substring(0, 5) + '...' : item.label;
+              
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-1 px-2 py-2 rounded-lg transition-colors whitespace-nowrap text-xs flex-shrink-0 ${
+                    isActive
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                  title={item.label}
+                >
+                  <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="text-xs">{shortLabel}</span>
+                </Link>
+              );
+            })}
+            <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
+              <ThemeToggle />
+            </div>
+          </div>
+
+          {/* 중간 태블릿 네비게이션 (md ~ lg) */}
+          <div className="hidden md:flex lg:hidden items-center gap-0.5 overflow-x-auto max-w-2xl">
+            {navItems.slice(0, 6).map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || 
                 (item.href !== '/' && pathname.startsWith(item.href));
@@ -80,19 +106,19 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1 px-2 py-2 rounded-lg transition-colors whitespace-nowrap text-xs ${
+                  className={`flex items-center gap-0.5 px-1.5 py-2 rounded-lg transition-colors whitespace-nowrap text-xs flex-shrink-0 ${
                     isActive
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                   }`}
                   title={item.label}
                 >
-                  <Icon className="w-3.5 h-3.5 flex-shrink-0" />
-                  <span className="truncate max-w-[80px]">{item.label.length > 8 ? item.label.substring(0, 6) + '...' : item.label}</span>
+                  <Icon className="w-3 h-3 flex-shrink-0" />
+                  <span className="text-xs">{item.label.length > 4 ? item.label.substring(0, 3) + '...' : item.label}</span>
                 </Link>
               );
             })}
-            <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
+            <div className="ml-1 pl-1 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
               <ThemeToggle />
             </div>
           </div>
