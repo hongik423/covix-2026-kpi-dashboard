@@ -37,7 +37,7 @@ export function Navigation() {
           </Link>
 
           {/* 데스크톱 네비게이션 */}
-          <div className="hidden xl:flex items-center gap-0.5 flex-wrap max-w-4xl">
+          <div className="hidden lg:flex items-center gap-0.5 flex-1 justify-end overflow-hidden">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || 
@@ -47,38 +47,7 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors whitespace-nowrap text-sm font-normal ${
-                    isActive
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
-                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                  }`}
-                  title={item.label}
-                >
-                  <Icon className="w-4 h-4 flex-shrink-0" />
-                  <span className="text-sm leading-tight">{item.label}</span>
-                </Link>
-              );
-            })}
-            <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
-              <ThemeToggle />
-            </div>
-          </div>
-
-          {/* 태블릿/작은 데스크톱 네비게이션 (lg ~ xl) */}
-          <div className="hidden lg:flex xl:hidden items-center gap-0.5 overflow-x-auto max-w-3xl">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href || 
-                (item.href !== '/' && pathname.startsWith(item.href));
-              
-              // 짧은 라벨 사용
-              const shortLabel = item.label.length > 6 ? item.label.substring(0, 5) + '...' : item.label;
-              
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-1 px-2 py-2 rounded-lg transition-colors whitespace-nowrap text-xs flex-shrink-0 ${
+                  className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap text-xs flex-shrink-0 ${
                     isActive
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -86,7 +55,7 @@ export function Navigation() {
                   title={item.label}
                 >
                   <Icon className="w-3.5 h-3.5 flex-shrink-0" />
-                  <span className="text-xs">{shortLabel}</span>
+                  <span className="text-xs leading-tight">{item.label}</span>
                 </Link>
               );
             })}
@@ -95,8 +64,8 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* 중간 태블릿 네비게이션 (md ~ lg) */}
-          <div className="hidden md:flex lg:hidden items-center gap-0.5 overflow-x-auto max-w-2xl">
+          {/* 태블릿 네비게이션 (md ~ lg) */}
+          <div className="hidden md:flex lg:hidden items-center gap-0.5 flex-1 justify-end overflow-hidden">
             {navItems.slice(0, 6).map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || 
@@ -106,7 +75,7 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-0.5 px-1.5 py-2 rounded-lg transition-colors whitespace-nowrap text-xs flex-shrink-0 ${
+                  className={`flex items-center gap-1 px-1.5 py-2 rounded-lg transition-colors whitespace-nowrap text-[10px] flex-shrink-0 ${
                     isActive
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -114,7 +83,7 @@ export function Navigation() {
                   title={item.label}
                 >
                   <Icon className="w-3 h-3 flex-shrink-0" />
-                  <span className="text-xs">{item.label.length > 4 ? item.label.substring(0, 3) + '...' : item.label}</span>
+                  <span className="text-[10px] leading-tight">{item.label.length > 6 ? item.label.substring(0, 5) + '...' : item.label}</span>
                 </Link>
               );
             })}

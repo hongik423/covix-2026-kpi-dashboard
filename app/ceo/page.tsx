@@ -9,9 +9,14 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export default function CEODashboard() {
-  const totalRevenue = useMemo(() => ({ target: 200000000000, current: 174000000000, unit: '원' }), []); // 200억 목표
+  // 2026년 목표: 200억원
+  const totalRevenue = useMemo(() => ({ 
+    target: 200000000000, // 200억원
+    current: 174000000000, // 현재 174억원 (87% 달성)
+    unit: '원' 
+  }), []);
 
-  // 월별 데이터 생성
+  // 월별 데이터 생성 (2026년 1월~6월)
   const months = useMemo(() => {
     return Array.from({ length: 6 }, (_, i) => {
       const date = new Date();
@@ -34,12 +39,22 @@ export default function CEODashboard() {
   }, []);
 
   const revenueData = useMemo(() => {
-    // 고정된 랜덤 값 생성 (렌더링마다 변경되지 않도록)
-    const randomValues = [0.87, 0.89, 0.91, 0.88, 0.90, 0.92];
+    // 월별 목표: 200억 / 12개월 = 월 16.67억
+    // 월별 실적: 점진적 증가 추세 (1월 14억 → 6월 18억)
+    const monthlyTarget = totalRevenue.target / 12; // 월 16.67억
+    const monthlyActuals = [
+      14000000000, // 1월: 14억
+      14500000000, // 2월: 14.5억
+      15000000000, // 3월: 15억
+      15500000000, // 4월: 15.5억
+      16000000000, // 5월: 16억
+      16500000000, // 6월: 16.5억
+    ];
+    
     return months.map((month, index) => ({
       month: format(new Date(month + '-01'), 'M월'),
-      목표: totalRevenue.target / 100000000,
-      실적: Math.floor((totalRevenue.current / 100000000) * randomValues[index]),
+      목표: Math.round(monthlyTarget / 100000000 * 10) / 10, // 억 단위, 소수점 1자리
+      실적: monthlyActuals[index] / 100000000, // 억 단위
     }));
   }, [months, totalRevenue]);
 
@@ -62,7 +77,9 @@ export default function CEODashboard() {
               <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 코빅스 Vision 2026 전사 대시보드
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">CEO 성과관리 뷰</p>
+              <p className="text-lg text-gray-600 dark:text-gray-400">
+                2026년 목표: 200억원 매출 달성 | CEO 성과관리 뷰
+              </p>
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">전사 매출 달성률</p>
@@ -89,23 +106,34 @@ export default function CEODashboard() {
             <div>
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-4xl font-bold text-gray-900 dark:text-white">
-                  {(totalRevenue.current / 100000000).toFixed(0)}억
+                  {(totalRevenue.current / 100000000).toFixed(0)}억원
                 </span>
                 <span className="text-xl text-gray-500 dark:text-gray-400">
                   / {(totalRevenue.target / 100000000).toFixed(0)}억원
                 </span>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
-                <div
-                  className={`h-4 rounded-full transition-all duration-300 ${
-                    totalProgress >= 90 
-                      ? 'bg-green-500' 
-                      : totalProgress >= 70 
-                        ? 'bg-yellow-500' 
-                        : 'bg-red-500'
-                  }`}
-                  style={{ width: `${Math.min(totalProgress, 100)}%` }}
-                />
+              <div className="mb-2">
+                <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  <span>2026년 목표 달성률</span>
+                  <span className="font-semibold">{totalProgress.toFixed(1)}%</span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+                  <div
+                    className={`h-4 rounded-full transition-all duration-300 ${
+                      totalProgress >= 90 
+                        ? 'bg-green-500' 
+                        : totalProgress >= 70 
+                          ? 'bg-yellow-500' 
+                          : 'bg-red-500'
+                    }`}
+                    style={{ width: `${Math.min(totalProgress, 100)}%` }}
+                  />
+                </div>
+              </div>
+              <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                <p>• 연간 목표: 200억원</p>
+                <p>• 현재 실적: 174억원 (누적)</p>
+                <p>• 남은 목표: {(totalRevenue.target - totalRevenue.current) / 100000000}억원</p>
               </div>
             </div>
             <div>
