@@ -15,11 +15,11 @@ export function Navigation() {
     { href: '/ceo', label: '전사 대시보드', icon: Building2 },
     { href: '/department/sales', label: '영업본부', icon: Building2 },
     { href: '/department/production', label: '생산본부', icon: Factory },
-    { href: '/department/quality', label: '품질본부+연구소', icon: FlaskConical },
-    { href: '/tasks', label: '즉시실행 과제', icon: CheckSquare },
-    { href: '/performance/upload', label: '성과자료 업로드 | KPI등록', icon: Upload },
+    { href: '/department/quality', label: '품질+연구소', icon: FlaskConical },
+    { href: '/tasks', label: '즉시실행', icon: CheckSquare },
+    { href: '/performance/upload', label: 'KPI등록', icon: Upload },
     { href: '/performance/analysis', label: 'AI 분석', icon: BarChart3 },
-    { href: '/dashboard', label: '코빅스 통합 대시보드', icon: LayoutDashboard },
+    { href: '/dashboard', label: '통합 대시보드', icon: LayoutDashboard },
   ];
 
   return (
@@ -37,8 +37,41 @@ export function Navigation() {
           </Link>
 
           {/* 데스크톱 네비게이션 */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1 overflow-x-auto">
             {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href || 
+                (item.href !== '/' && pathname.startsWith(item.href));
+              
+              // 긴 텍스트는 줄임 처리
+              const displayLabel = item.label.length > 12 
+                ? item.label.substring(0, 10) + '...' 
+                : item.label;
+              
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors whitespace-nowrap text-sm ${
+                    isActive
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                  title={item.label}
+                >
+                  <Icon className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate max-w-[120px]">{displayLabel}</span>
+                </Link>
+              );
+            })}
+            <div className="ml-4 pl-4 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
+              <ThemeToggle />
+            </div>
+          </div>
+
+          {/* 태블릿 네비게이션 (md ~ lg) */}
+          <div className="hidden md:flex lg:hidden items-center gap-1 overflow-x-auto">
+            {navItems.slice(0, 5).map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || 
                 (item.href !== '/' && pathname.startsWith(item.href));
@@ -47,18 +80,19 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                  className={`flex items-center gap-1 px-2 py-2 rounded-lg transition-colors whitespace-nowrap text-xs ${
                     isActive
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                   }`}
+                  title={item.label}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate max-w-[80px]">{item.label.length > 8 ? item.label.substring(0, 6) + '...' : item.label}</span>
                 </Link>
               );
             })}
-            <div className="ml-4 pl-4 border-l border-gray-200 dark:border-gray-700">
+            <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700 flex-shrink-0">
               <ThemeToggle />
             </div>
           </div>

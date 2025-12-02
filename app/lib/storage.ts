@@ -55,11 +55,27 @@ export function getAllFeedbacks(month: string): Record<string, Feedback> {
 }
 
 export function updateKPIWithFeedback(kpi: KPI, month: string): KPI {
-  const feedback = getFeedback(kpi.id, month);
-  return {
-    ...kpi,
-    month,
-    feedback: feedback || undefined,
-  };
+  if (typeof window === 'undefined') {
+    // 서버 사이드에서는 피드백 없이 반환
+    return {
+      ...kpi,
+      month,
+    };
+  }
+  
+  try {
+    const feedback = getFeedback(kpi.id, month);
+    return {
+      ...kpi,
+      month,
+      feedback: feedback || undefined,
+    };
+  } catch (error) {
+    console.error('KPI 피드백 업데이트 오류:', error);
+    return {
+      ...kpi,
+      month,
+    };
+  }
 }
 

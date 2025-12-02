@@ -27,16 +27,22 @@ export default function DepartmentPage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!department) return;
 
-    const allKPIs: KPI[] = [];
-    deptExecutives.forEach((exec) => {
-      exec.kpis.forEach((kpi) => {
-        const updatedKpi = updateKPIWithFeedback(kpi, selectedMonth);
-        allKPIs.push(updatedKpi);
+    try {
+      const allKPIs: KPI[] = [];
+      deptExecutives.forEach((exec) => {
+        exec.kpis.forEach((kpi) => {
+          const updatedKpi = updateKPIWithFeedback(kpi, selectedMonth);
+          allKPIs.push(updatedKpi);
+        });
       });
-    });
-    setKpis(allKPIs);
-  }, [deptExecutives, selectedMonth]);
+      setKpis(allKPIs);
+    } catch (error) {
+      console.error('KPI 로드 오류:', error);
+      setKpis([]);
+    }
+  }, [deptId, selectedMonth, department]);
 
   if (!department) {
     return (
@@ -55,8 +61,31 @@ export default function DepartmentPage() {
   const handleFeedbackSave = (kpiId: string, feedback: any) => {
     // 피드백 저장 로직
     if (typeof window !== 'undefined') {
-      const { saveFeedback } = require('../../lib/storage');
-      saveFeedback(kpiId, selectedMonth, feedback);
+      try {
+        const { saveFeedback } = require('../../lib/storage');
+        saveFeedback(kpiId, selectedMonth, feedback);
+        // KPI 목록 업데이트
+        setKpis((prevKPIs) =>
+          prevKPIs.map((kpi) =>
+            kpi.id === kpiId
+              ? {
+                  ...kpi,
+                  feedback: {
+                    ...feedback,
+                    id: `${kpiId}-${selectedMonth}-${Date.now()}`,
+                    kpiId,
+                    month: selectedMonth,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    evidenceFiles: feedback.evidenceFiles || [],
+                  },
+                }
+              : kpi,
+          ),
+        );
+      } catch (error) {
+        console.error('피드백 저장 오류:', error);
+      }
     }
   };
 
