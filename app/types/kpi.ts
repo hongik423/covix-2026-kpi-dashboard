@@ -41,7 +41,21 @@ export interface Executive {
   id: string;
   name: string;
   position: string;
+  department?: string;
   kpis: KPI[];
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  department: string;
+  owner: string;
+  startDate: string;
+  endDate: string;
+  progress: number;
+  status: 'pending' | 'in-progress' | 'completed' | 'delayed';
+  priority: 'high' | 'medium' | 'low';
+  description?: string;
 }
 
 export interface ActionPlan {

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, BarChart3, Building2, Upload, LayoutDashboard } from 'lucide-react';
+import { Home, BarChart3, Building2, Upload, LayoutDashboard, Factory, FlaskConical, CheckSquare, Target } from 'lucide-react';
 import { useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -11,8 +11,12 @@ export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: '/', label: '메인', icon: Home },
+    { href: '/overview', label: '전체 개요', icon: Target },
     { href: '/ceo', label: '전사 대시보드', icon: Building2 },
+    { href: '/department/sales', label: '영업본부', icon: Building2 },
+    { href: '/department/production', label: '생산본부', icon: Factory },
+    { href: '/department/quality', label: '품질본부+연구소', icon: FlaskConical },
+    { href: '/tasks', label: '즉시실행 과제', icon: CheckSquare },
     { href: '/performance/upload', label: '성과자료 업로드 | KPI등록', icon: Upload },
     { href: '/performance/analysis', label: 'AI 분석', icon: BarChart3 },
     { href: '/dashboard', label: '코빅스 통합 대시보드', icon: LayoutDashboard },
