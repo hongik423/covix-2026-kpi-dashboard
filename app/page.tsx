@@ -7,12 +7,12 @@ import { BarChart3, Users, TrendingUp, Building2 } from 'lucide-react';
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+      <main className="container mx-auto px-3 sm:px-4 py-8 sm:py-16">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             코빅스 KPI 성과관리 대시보드
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 px-2">
             임원별 KPI를 실시간으로 모니터링하고 분석합니다
           </p>
         </div>
@@ -72,17 +72,17 @@ export default function Home() {
         </div>
 
         {/* CEO 대시보드 링크 */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <Link
             href="/ceo"
-            className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Building2 className="w-8 h-8" />
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-1">전사 대시보드 (CEO 뷰)</h2>
-              <p className="text-blue-100">전사 매출 목표 및 본부별 KPI 현황을 한눈에 확인하세요</p>
+            <Building2 className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1">전사 대시보드 (CEO 뷰)</h2>
+              <p className="text-sm sm:text-base text-blue-100">전사 매출 목표 및 본부별 KPI 현황을 한눈에 확인하세요</p>
             </div>
-            <span className="text-2xl">→</span>
+            <span className="text-xl sm:text-2xl flex-shrink-0">→</span>
           </Link>
         </div>
 
@@ -100,22 +100,22 @@ export default function Home() {
               <Link
                 key={executive.id}
                 href={`/dashboard/${executive.id}`}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1">
                       {executive.name}
                     </h2>
-                    <p className="text-lg text-gray-500 dark:text-gray-400">
+                    <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
                       {executive.position}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  <div className="text-left sm:text-right">
+                    <p className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">
                       {avgProgress.toFixed(1)}%
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">평균 달성률</p>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">평균 달성률</p>
                   </div>
                 </div>
 

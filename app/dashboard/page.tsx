@@ -8,12 +8,12 @@ import { BarChart3, Users, TrendingUp, Building2, ArrowRight, Target, Factory, F
 export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+      <main className="container mx-auto px-3 sm:px-4 py-8 sm:py-16">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             코빅스 통합 대시보드
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 px-2">
             2026년 200억 매출 달성을 위한 성과관리 시스템
           </p>
         </div>
@@ -73,78 +73,78 @@ export default function DashboardPage() {
         </div>
 
         {/* 빠른 링크 */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12">
           <Link
             href="/overview"
-            className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Target className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">전체 개요</h3>
-            <p className="text-sm text-blue-100">통합 대시보드</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <Target className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">전체 개요</h3>
+            <p className="text-xs sm:text-sm text-blue-100">통합 대시보드</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
 
           <Link
             href="/ceo"
-            className="bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Building2 className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">전사 대시보드</h3>
-            <p className="text-sm text-purple-100">CEO 뷰</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <Building2 className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">전사 대시보드</h3>
+            <p className="text-xs sm:text-sm text-purple-100">CEO 뷰</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
 
           <Link
             href="/tasks"
-            className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <CheckSquare className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">즉시실행 과제</h3>
-            <p className="text-sm text-green-100">과제 추적</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <CheckSquare className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">즉시실행 과제</h3>
+            <p className="text-xs sm:text-sm text-green-100">과제 추적</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
 
           <Link
             href="/performance/upload"
-            className="bg-gradient-to-br from-orange-600 to-orange-700 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-orange-600 to-orange-700 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <BarChart3 className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">KPI 등록</h3>
-            <p className="text-sm text-orange-100">성과자료 업로드</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">KPI 등록</h3>
+            <p className="text-xs sm:text-sm text-orange-100">성과자료 업로드</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
         </div>
 
         {/* 본부별 빠른 링크 */}
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
+        <div className="grid md:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-12">
           <Link
             href="/department/sales"
-            className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Building2 className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">영업본부</h3>
-            <p className="text-sm text-green-100">차귀훈, 오효성</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <Building2 className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">영업본부</h3>
+            <p className="text-xs sm:text-sm text-green-100">차귀훈, 오효성</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
 
           <Link
             href="/department/production"
-            className="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Factory className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">생산본부</h3>
-            <p className="text-sm text-pink-100">최홍영 생산본부장</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <Factory className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">생산본부</h3>
+            <p className="text-xs sm:text-sm text-pink-100">최홍영 생산본부장</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
 
           <Link
             href="/department/quality"
-            className="bg-gradient-to-br from-red-500 to-orange-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-br from-red-500 to-orange-600 text-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <FlaskConical className="w-8 h-8 mb-3" />
-            <h3 className="text-lg font-semibold mb-1">품질본부+연구소</h3>
-            <p className="text-sm text-red-100">최준영, 이창훈</p>
-            <ArrowRight className="w-5 h-5 mt-2" />
+            <FlaskConical className="w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3" />
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">품질본부+연구소</h3>
+            <p className="text-xs sm:text-sm text-red-100">최준영, 이창훈</p>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 mt-2" />
           </Link>
         </div>
 
@@ -163,22 +163,22 @@ export default function DashboardPage() {
               <Link
                 key={executive.id}
                 href={`/dashboard/${executive.id}`}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1">
                       {executive.name}
                     </h2>
-                    <p className="text-lg text-gray-500 dark:text-gray-400">
+                    <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
                       {executive.position}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  <div className="text-left sm:text-right">
+                    <p className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">
                       {avgProgress.toFixed(1)}%
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">평균 달성률</p>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">평균 달성률</p>
                   </div>
                 </div>
 

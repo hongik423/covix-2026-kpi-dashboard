@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -17,6 +17,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "COVIX 2026년 200억 매출달성 성과관리 대시보드",
   description: "코빅스 2026년 200억 매출 달성을 위한 GEMS 기반 성과관리 시스템",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({

@@ -86,44 +86,46 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* 헤더 */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-4 transition-colors"
+            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>메인으로 돌아가기</span>
           </button>
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 {executive.name} {executive.position}
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400">
                 GEMS 기반 KPI 성과관리 대시보드
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">전체 평균 달성률</p>
-              <p className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+            <div className="text-left sm:text-right">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-1">전체 평균 달성률</p>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400">
                 {avgProgress.toFixed(1)}%
               </p>
             </div>
           </div>
           
           {/* 월별 선택 */}
-          <div className="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-            <Calendar className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-            <label htmlFor="month-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              조회 월:
-            </label>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 bg-white dark:bg-gray-800 rounded-lg p-3 sm:p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+              <label htmlFor="month-select" className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
+                조회 월:
+              </label>
+            </div>
             <select
               id="month-select"
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full sm:w-auto px-3 sm:px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
               {Array.from({ length: 6 }, (_, i) => {
                 const date = new Date();
@@ -158,7 +160,7 @@ export default function DashboardPage() {
         </div>
 
         {/* 차트 섹션 */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {kpis.slice(0, 2).map((kpi) => (
             <KPITrendChart key={kpi.id} kpi={kpi} />
           ))}
@@ -166,21 +168,21 @@ export default function DashboardPage() {
 
         {/* AI 분석 섹션 */}
         {analyzing ? (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 mb-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 sm:p-8 border border-gray-200 dark:border-gray-700 mb-6 sm:mb-8">
             <div className="flex items-center justify-center gap-3">
-              <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
-              <span className="text-lg text-gray-700 dark:text-gray-300">
+              <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin text-blue-600" />
+              <span className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
                 AI 분석 중...
               </span>
             </div>
           </div>
         ) : analysis ? (
-          <div className="space-y-8 mb-8">
+          <div className="space-y-6 sm:space-y-8 mb-6 sm:mb-8">
             {/* 분석 요약 */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-3 mb-4">
-                <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">AI 분석 요약</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">AI 분석 요약</h2>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 {analysis.summary}
@@ -189,8 +191,8 @@ export default function DashboardPage() {
 
             {/* 인사이트 */}
             {analysis.insights.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                   주요 인사이트
                 </h2>
                 <ul className="space-y-3">
@@ -211,8 +213,8 @@ export default function DashboardPage() {
 
             {/* 권장사항 */}
             {analysis.recommendations.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                   권장사항
                 </h2>
                 <ul className="space-y-3">
@@ -233,11 +235,11 @@ export default function DashboardPage() {
 
             {/* 실행 계획 */}
             {analysis.actionPlans.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
                   실행 계획
                 </h2>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   {analysis.actionPlans.map((plan) => (
                     <ActionPlanCard key={plan.id} plan={plan} />
                   ))}

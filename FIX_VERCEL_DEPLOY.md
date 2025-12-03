@@ -55,3 +55,4 @@ git push -u origin main
 3. 커밋이 있는지 확인 (`git log`로 확인)
 4. 원격 저장소가 올바른지 확인 (`git remote -v`로 확인)
 
+

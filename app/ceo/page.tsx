@@ -182,28 +182,28 @@ export default function CEODashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* 헤더 */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <Link
             href="/"
-            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-4 transition-colors"
+            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>메인으로 돌아가기</span>
           </Link>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 코빅스 Vision 2026 전사 대시보드
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400">
                 2026년 목표: 200억원 매출 달성 | CEO 성과관리 뷰
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">전사 매출 달성률</p>
-              <p className={`text-4xl font-bold ${
+            <div className="text-left sm:text-right">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-1">전사 매출 달성률</p>
+              <p className={`text-2xl sm:text-3xl md:text-4xl font-bold ${
                 totalProgress >= 90 
                   ? 'text-green-600 dark:text-green-400' 
                   : totalProgress >= 70 
@@ -217,18 +217,18 @@ export default function CEODashboard() {
         </div>
 
         {/* 전사 매출 목표 카드 */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 mb-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">전사 매출 목표</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">전사 매출 목표</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             <div>
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-4xl font-bold text-gray-900 dark:text-white">
+              <div className="flex flex-wrap items-baseline gap-2 mb-4">
+                <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
                   {(totalRevenue.current / 100000000).toFixed(0)}억원
                 </span>
-                <span className="text-xl text-gray-500 dark:text-gray-400">
+                <span className="text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400">
                   / {(totalRevenue.target / 100000000).toFixed(0)}억원
                 </span>
               </div>
@@ -256,7 +256,7 @@ export default function CEODashboard() {
                 <p>• 남은 목표: {(totalRevenue.target - totalRevenue.current) / 100000000}억원</p>
               </div>
             </div>
-            <div>
+            <div className="min-h-[200px] sm:min-h-[250px]">
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={revenueData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -280,12 +280,14 @@ export default function CEODashboard() {
         </div>
 
         {/* 본부별 KPI 현황 */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 mb-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Building2 className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">본부별 KPI 달성률</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-700 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <Building2 className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">본부별 KPI 달성률</h2>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="w-full overflow-x-auto">
+            <div className="min-w-[300px] min-h-[250px] sm:min-h-[300px]">
+              <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis dataKey="name" stroke="#6b7280" />
@@ -315,18 +317,20 @@ export default function CEODashboard() {
                 ))}
               </Bar>
             </BarChart>
-          </ResponsiveContainer>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
 
         {/* 전사 핵심 지표 및 즉시 대응 필요 항목 */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {/* 전사 핵심 지표 */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               전사 핵심 지표
             </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+              <table className="w-full text-xs sm:text-sm min-w-[500px] sm:min-w-0">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-2 px-3 text-gray-700 dark:text-gray-300">구분</th>
@@ -365,8 +369,8 @@ export default function CEODashboard() {
           </div>
 
           {/* 즉시 대응 필요 항목 */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               즉시 대응 필요 항목
             </h3>
             <div className="space-y-3">
@@ -403,12 +407,12 @@ export default function CEODashboard() {
         </div>
 
         {/* 부서별 KPI 달성률 히트맵 */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700 mb-8">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700 mb-6 sm:mb-8">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             부서별 KPI 달성률 히트맵
           </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-xs sm:text-sm min-w-[500px] sm:min-w-0">
               <thead>
                 <tr className="border-b border-gray-200 dark:border-gray-700">
                   <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
@@ -476,7 +480,7 @@ export default function CEODashboard() {
         </div>
 
         {/* 본부별 상세 현황 */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           {executives.map((executive) => {
             const avgProgress =
               executive.kpis.reduce((sum, kpi) => sum + (kpi.current / kpi.target) * 100, 0) /
@@ -489,18 +493,18 @@ export default function CEODashboard() {
               <Link
                 key={executive.id}
                 href={`/dashboard/${executive.id}`}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 sm:mb-4 gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1">
                       {executive.name} {executive.position}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                       평균 달성률: {avgProgress.toFixed(1)}%
                     </p>
                   </div>
-                  <div className={`text-2xl font-bold ${
+                  <div className={`text-xl sm:text-2xl font-bold ${
                     avgProgress >= 90 
                       ? 'text-green-600 dark:text-green-400' 
                       : avgProgress >= 70 

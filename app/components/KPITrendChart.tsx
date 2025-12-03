@@ -24,11 +24,13 @@ export function KPITrendChart({ kpi }: KPITrendChartProps) {
   const data = generateTrendData(kpi);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
         {kpi.name} 추이
       </h3>
-      <ResponsiveContainer width="100%" height={300}>
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[300px] min-h-[250px] sm:min-h-[300px]">
+          <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="month" stroke="#6b7280" />
@@ -56,7 +58,9 @@ export function KPITrendChart({ kpi }: KPITrendChartProps) {
             dot={{ r: 4 }}
           />
         </LineChart>
-      </ResponsiveContainer>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 }
